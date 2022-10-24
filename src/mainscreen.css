@@ -1,0 +1,8 @@
+.main_flex_container {
+    display: inline-flex;
+    background-color: DodgerBlue;
+}
+
+.main_flex_container > div {
+    background-color: #f1f1f1;
+}
