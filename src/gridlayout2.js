@@ -38,7 +38,7 @@ class MyFirstGrid extends React.Component {
                     <CDBSidebarMenu>
                         <CDBSidebarMenuItem icon="columns"
                                             onClick={() => this.switchComponent()}>Dashboard</CDBSidebarMenuItem>
-                        <CDBSidebarMenuItem icon="table">Tables (NYI)</CDBSidebarMenuItem>
+                        <CDBSidebarMenuItem icon="table">Charts (NYI)</CDBSidebarMenuItem>
                         <CDBSidebarMenuItem icon="user">Profile page (NYI)</CDBSidebarMenuItem>
                         <CDBSidebarMenuItem icon="chart-line">Analytics (NYI)</CDBSidebarMenuItem>
                         <CDBSidebarMenuItem icon="chart-line">Launch Control (NYI)</CDBSidebarMenuItem>
@@ -164,10 +164,10 @@ class MyFirstGrid extends React.Component {
                 >
                     <div key="1">
                         {(!this.state.user_auth) ? <Login login={this.loginUser.bind(this)}/> :
-                            (!this.state.dashboard) ? <App/> :
+                            (this.state.dashboard) ?
                                 <MainDashboard ox={this.state.ox} lf={this.state.lf} ec={this.state.ec}
                                                sf={this.state.sf}/>
-                        }
+                                : <App/>}
                     </div>
 
                 </ResponsiveGridLayout>
