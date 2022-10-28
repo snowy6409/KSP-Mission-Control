@@ -14,6 +14,7 @@ import App from "./App";
 import Login from "./Login";
 import "./mainscreen.css"
 import MainDashboard from "./maindashboard";
+import ChartDisplay from "./ChartClass";
 
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
@@ -38,7 +39,8 @@ class MyFirstGrid extends React.Component {
                     <CDBSidebarMenu>
                         <CDBSidebarMenuItem icon="columns"
                                             onClick={() => this.switchComponent()}>Dashboard</CDBSidebarMenuItem>
-                        <CDBSidebarMenuItem icon="table">Charts (NYI)</CDBSidebarMenuItem>
+                        <CDBSidebarMenuItem icon="table"
+                                            onClick={()=>this.switchToCharts()}>Charts (NYI)</CDBSidebarMenuItem>
                         <CDBSidebarMenuItem icon="user">Profile page (NYI)</CDBSidebarMenuItem>
                         <CDBSidebarMenuItem icon="chart-line">Analytics (NYI)</CDBSidebarMenuItem>
                         <CDBSidebarMenuItem icon="chart-line">Launch Control (NYI)</CDBSidebarMenuItem>
@@ -84,6 +86,9 @@ class MyFirstGrid extends React.Component {
 
     switchComponent() {
         this.setState({dashboard: true})
+    };
+    switchToCharts() {
+        this.setState({dashboard: false})
     };
 
     componentDidMount() {
@@ -167,7 +172,7 @@ class MyFirstGrid extends React.Component {
                             (this.state.dashboard) ?
                                 <MainDashboard ox={this.state.ox} lf={this.state.lf} ec={this.state.ec}
                                                sf={this.state.sf}/>
-                                : <App/>}
+                                : <ChartDisplay/>}
                     </div>
 
                 </ResponsiveGridLayout>
