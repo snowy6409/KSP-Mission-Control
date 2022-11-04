@@ -80,7 +80,7 @@ const options = {
             {
                 ticks: {
                     beginAtZero: true,
-                    max: 1
+                    max: 100000
                 }
             }
         ]
