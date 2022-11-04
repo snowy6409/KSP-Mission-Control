@@ -31,9 +31,13 @@ const data = {
         }
     ]
 };
-
-
-
+let current_data;
+// Event source information
+let source = new EventSource('/listen');
+source.onmessage = function (e) {
+    current_data = e.data;
+};
+//////////////////////////
 const options = {
     elements: {
         line: {
@@ -46,6 +50,13 @@ const options = {
                 type: "realtime",
                 distribution: "linear",
                 realtime: {
+                    onRefresh: function(chart) {
+                        chart.data.datasets[0].data.push({
+                            x: moment(),
+                            y: parseFloat(current_data)
+                        });
+                    },
+                    delay: 1000,
                     time: {
                         displayFormat: "h:mm"
                     }
@@ -77,16 +88,7 @@ const options = {
 };
 
 
-// Event source information
-let source = new EventSource('/listen');
-source.onmessage = function (e) {
-    console.log(e.data);
-    data.datasets[0].data.push({
-        x: moment(),
-        y: parseFloat(e.data)
-    });
-};
-//////////////////////////
+
 
 
 class ChartDisplay extends React.Component {
