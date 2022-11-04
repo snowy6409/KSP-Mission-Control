@@ -80,6 +80,7 @@ const options = {
 // Event source information
 let source = new EventSource('/listen');
 source.onmessage = function (e) {
+    console.log(e.data);
     data.datasets[0].data.push({
         x: moment(),
         y: parseFloat(e.data)
