@@ -15,6 +15,7 @@ import Login from "./Login";
 import "./mainscreen.css"
 import MainDashboard from "./maindashboard";
 import ChartDisplay from "./ChartClass";
+import ControlPanel from "./ControlPanel";
 
 
 const ResponsiveGridLayout = WidthProvider(Responsive);
@@ -40,10 +41,10 @@ class MyFirstGrid extends React.Component {
                         <CDBSidebarMenuItem icon="columns"
                                             onClick={() => this.switchComponent()}>Dashboard</CDBSidebarMenuItem>
                         <CDBSidebarMenuItem icon="table"
-                                            onClick={()=>this.switchToCharts()}>Charts (NYI)</CDBSidebarMenuItem>
+                                            onClick={()=>this.switchToCharts()}>Charts (WIP)</CDBSidebarMenuItem>
                         <CDBSidebarMenuItem icon="user">Profile page (NYI)</CDBSidebarMenuItem>
-                        <CDBSidebarMenuItem icon="chart-line">Analytics (NYI)</CDBSidebarMenuItem>
-                        <CDBSidebarMenuItem icon="chart-line">Launch Control (NYI)</CDBSidebarMenuItem>
+                        <CDBSidebarMenuItem icon="chart-line"
+                                            onClick={()=>this.switchToControl()}>Launch Control (WIP)</CDBSidebarMenuItem>
                         <CDBSidebarMenuItem icon="chart-line">Signal Control (NYI)</CDBSidebarMenuItem>
                         <CDBSidebarMenuItem icon="chart-line">Experiment Control (NYI)</CDBSidebarMenuItem>
                         <CDBSidebarMenuItem icon="chart-line">Resource Control (NYI)</CDBSidebarMenuItem>
@@ -85,10 +86,10 @@ class MyFirstGrid extends React.Component {
     }
 
     switchComponent() {
-        this.setState({dashboard: true})
+        this.setState({dashboard: 0})
     };
     switchToCharts() {
-        this.setState({dashboard: false})
+        this.setState({dashboard: 1})
     };
 
     componentDidMount() {
@@ -169,15 +170,20 @@ class MyFirstGrid extends React.Component {
                 >
                     <div key="1">
                         {(!this.state.user_auth) ? <Login login={this.loginUser.bind(this)}/> :
-                            (this.state.dashboard) ?
-                                <MainDashboard ox={this.state.ox} lf={this.state.lf} ec={this.state.ec}
-                                               sf={this.state.sf}/>
-                                : <ChartDisplay/>}
+
+
+                                 (this.state.dashboard == 1) ? <ChartDisplay/> :
+                                    (this.state.dashboard == 3) ? <ControlPanel/>:<MainDashboard ox={this.state.ox} lf={this.state.lf} ec={this.state.ec}
+                                                                                                 sf={this.state.sf}/> }
                     </div>
 
                 </ResponsiveGridLayout>
             </div>
         );
+    }
+
+    switchToControl() {
+        this.setState({dashboard:3})
     }
 }
 

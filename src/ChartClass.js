@@ -19,7 +19,7 @@ const color = Chart.helpers.color;
 const data = {
     datasets: [
         {
-            label: "Dataset 1 (linear interpolation)",
+            label: "Altitude",
             backgroundColor: color(chartColors.red)
                 .alpha(0.5)
                 .rgbString(),
@@ -28,15 +28,38 @@ const data = {
             lineTension: 0,
             borderDash: [8, 4],
             data: []
+        },
+        {
+            label: "Apoapsis",
+            backgroundColor: color(chartColors.blue)
+                .alpha(0.5)
+                .rgbString(),
+            borderColor: chartColors.blue,
+            fill: false,
+            lineTension: 0,
+            borderDash: [8, 4],
+            data: []
         }
     ]
 };
-let current_data;
+let current_data =0;
+let current_data_apoapsis=0;
 // Event source information
 let source = new EventSource('/listen');
+source.addEventListener("altitude", (event)=>{
+    current_data = event.data;
+})
+source.addEventListener("apoapsis", (event)=>{
+    current_data_apoapsis = event.data;
+})
 source.onmessage = function (e) {
-    current_data = e.data;
+    console.log("Data")
+    console.log(e.data)
 };
+source.onerror = (err) => {
+    console.error("EventSource failed:", err);
+};
+
 //////////////////////////
 const options = {
     elements: {
@@ -54,6 +77,10 @@ const options = {
                         chart.data.datasets[0].data.push({
                             x: moment(),
                             y: parseFloat(current_data)
+                        });
+                        chart.data.datasets[1].data.push({
+                            x: moment(),
+                            y: parseFloat(current_data_apoapsis)
                         });
                     },
                     delay: 1000,
@@ -80,7 +107,7 @@ const options = {
             {
                 ticks: {
                     beginAtZero: true,
-                    max: 100000
+                    max: 1000000
                 }
             }
         ]

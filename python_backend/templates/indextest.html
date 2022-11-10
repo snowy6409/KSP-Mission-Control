@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+ <style>
+     body { max-width: 500px; margin: auto; padding: 1em; background: black; color: #fff; font: 16px/1.6 menlo, monospace;}
+ </style>
+<body>
+<table id="out" bordercolor="#fff">
+    <tr bordercolor ='#fff'>
+        <td>Message</td>
+    </tr>
+</table>
+</body>
+ <script>
+                var source = new EventSource('/listen');
+                var out = document.getElementById('out');
+                source.onopen = function () {
+                    console.log("Eventsource opened")
+                };
+                source.onmessage = function (e) {
+                    console.log("Eventsource message" + e.data)
+                };
+                source.onerror = function (e) {
+                    console.log("Eventsource failed")
+                }
+
+                source.onmessage = function(e) {
+                    var row = out.insertRow(-1);
+                    var cell = row.insertCell(0);
+                    console.log("Event: " + e.event)
+                    console.log("Message :" + e.data)
+                    cell.innerHTML = e.data;
+                };
+
+ </script>
+</html>
